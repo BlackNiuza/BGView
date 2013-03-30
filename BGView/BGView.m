@@ -1,5 +1,6 @@
 //
 //  BGView.m
+//  weitao
 //
 //  Created by blackniuza on 13-3-11.
 //  Copyright (c) 2013年 taobao. All rights reserved.
@@ -39,6 +40,11 @@
 -(void)initBGView
 {
     [self addBackGesture];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resignActive:) name:UIApplicationWillResignActiveNotification object:[UIApplication sharedApplication]];
+}
+
+-(void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 
@@ -158,6 +164,11 @@
         //移除底图
         [_backgroundView removeFromSuperview];
     }];
+}
+
+-(void)resignActive:(UIApplication*)app
+{
+    [_backgroundView removeFromSuperview];
 }
 
 @end
